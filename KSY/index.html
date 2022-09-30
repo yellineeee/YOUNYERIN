@@ -44,7 +44,7 @@
       <div class="container">
         <!-- example of image begin -->
         <!-- example of video begin -->
-        <video autoplay controls loop muted poster="">
+        <video autoplay loop muted poster="">
           <source src="./imgs/opening.mp4" />
         </video>
         <!-- example of video end -->
@@ -60,15 +60,57 @@
         <img src="./imgs/8.jpg" loading="lazy" />
         <img src="./imgs/82.jpg" loading="lazy" />
         <!-- example of video begin -->
-        <video autoplay controls loop muted poster="">
+        <video autoplay loop muted poster="">
           <source src="./imgs/move.mp4" />
         </video>
         <!-- example of video end -->
         <img src="./imgs/10.jpg" loading="lazy" />
         <!-- example of video begin -->
-        <video controls muted poster="./imgs/10.1-12.jpg">
-          <source src="./imgs/no sound video.mp4" />
-        </video>
+        <div id="player"></div>
+        <script>
+          var tag = document.createElement('script');
+          tag.src = 'https://www.youtube.com/iframe_api';
+          var firstScriptTag = document.getElementsByTagName('script')[0];
+          firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+          var player;
+          function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+              height: '810',
+              width: '1440',
+              videoId: 'nm-0aKHj-fY',
+              playerVars: {
+                rel: 0,
+                showinfo: 0,
+                modestbranding: 1,
+                playsinline: 1,
+                rel: 0,
+                controls: 1,
+                color: 'white',
+                loop: 1,
+                mute: 1,
+                // 'origin': 'https://meeranblog24x7.blogspot.com/'
+              },
+              events: {
+                onReady: onPlayerReady,
+                // 'onStateChange': onPlayerStateChange
+              },
+            });
+          }
+          function onPlayerReady(event) {
+            player.playVideo();
+            player.mute();
+          }
+          var done = false;
+          function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING && !done) {
+              setTimeout(stopVideo, 6000);
+              done = true;
+            }
+          }
+          function stopVideo() {
+            player.stopVideo();
+          }
+        </script>
         <!-- example of video end -->
         <img src="./imgs/11.jpg" loading="lazy" />
         <img src="./imgs/12.jpg" loading="lazy" />
